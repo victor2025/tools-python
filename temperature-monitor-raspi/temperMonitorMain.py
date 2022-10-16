@@ -11,7 +11,7 @@ from temperMonitor import TemperMonitor
 
 def main():
     # create monitor
-    monitor = TemperMonitor("")
+    monitor = TemperMonitor("email")
     # start
     monitor.startMonitor()
 
