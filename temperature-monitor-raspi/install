@@ -1,0 +1,23 @@
+lib_dir=/usr/lib/temper-monitor
+conf_dir=/etc/temper-monitor
+service_file=/lib/systemd/system/temper-monitor.service
+# move src
+echo "Creating lib..."
+if [ ! -d $lib_dir ]; then
+    sudo mkdir $lib_dir
+fi
+sudo cp -r ./src $lib_dir/src
+sudo cp ./start.sh $lib_dir/start.sh
+# move config
+if [ ! -d $conf_dir ]; then
+    echo "Creating default config..."
+    sudo mkdir $conf_dir
+    sudo cp ./default-config/* $conf_dir
+else
+    echo "Config files has existed..."
+fi
+# move service file
+echo "Creating service file..."
+sudo cp ./service/temper-monitor.service $service_file
+
+echo "Install completed!"

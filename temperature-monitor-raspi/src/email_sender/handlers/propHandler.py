@@ -26,7 +26,7 @@ def parse(basepath, filename) -> ConfigParser:
 # load sender config
 class SenderLoader:
 
-    def __init__(self, basepath = ".", filename = "sender.conf"):
+    def __init__(self, basepath = ".", filename = "email-sender.conf"):
         # 设置属性
         self.host = ""
         self.port = 0
@@ -54,7 +54,7 @@ class SenderLoader:
 
 # load receiver config
 class ReceiverLoader:
-    def __init__(self, basepath = ".", filename = "receiver.conf"):
+    def __init__(self, basepath = ".", filename = "email-receiver.conf"):
         # 设置属性
         self.toaddrs = []
         # 调用函数读取配置文件

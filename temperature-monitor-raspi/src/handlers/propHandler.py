@@ -8,11 +8,10 @@
 '''
 from configparser import ConfigParser
 import os
-from log_helper import log
 
 # parse configure file 
 def parse(basepath, filename) -> ConfigParser:
-    log.info("Loading Configurations from {}...".format(filename))
+    print("Loading Configurations from {}...".format(filename))
     parser = ConfigParser()
     filepath = os.path.join(os.path.abspath(basepath), filename)
     # 判断文件是否存在
@@ -27,30 +26,46 @@ class TemperLoader:
 
     def __init__(self, basepath, filename = "temper.conf"):
         # 设置属性
+        self.config_path = basepath
         self.level_warn = 60.0
         self.level_reboot = 90.0
+        # log
+        self.log_file = False
+        self.log_path = "/var/log/temper-monitor.log"
+        # other param
+        self.peroid = 2
+        self.mode = "base"
         # 调用函数读取配置文件
         self._readConfig(basepath,filename)
         # 配置读取完成
-        log.info("Configure load completed...")
+        print("Configure load completed...")
 
     def _readConfig(self, basepath, filename):
         # 初始化
         parser = parse(basepath,filename)
-        group = 'level'
         # 开始逐个读取
         try:
             # read warn temperature
-            tempWarn = float(parser.get(group,"warn"))
+            tempWarn = parser.getfloat("level","warn")
             if(tempWarn<=0):
-                log.info("Warn temperature is too low, use default!")
+                print("Warn temperature is too low, use default!")
             else:
                 self.level_warn = tempWarn
             # read reboot temperature
-            tempReboot = float(parser.get(group,"reboot"))
+            tempReboot = parser.getfloat("level","reboot")
             if(tempReboot<=0):
-                log.info("Reboot temperature is too low, use default!")
+                print("Reboot temperature is too low, use default!")
             else:
                 self.level_reboot = tempReboot
+            # read log conf
+            if(parser.has_option("global","log_file")):
+                self.log_file = parser.getboolean("global","log_file")
+            if(parser.has_option("global","log_path")):
+                self.log_path = parser.get("global","log_path")
+            # read other params
+            if(parser.has_option("global","peroid")):
+                self.peroid = parser.getint("global","peroid")
+            if(parser.has_option("global","mode")):
+                self.mode = parser.get("global","mode")
         except:
             raise Exception("There are some error in the configure file: {} !!!".format(filename))

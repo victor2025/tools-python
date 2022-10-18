@@ -1,0 +1,9 @@
+lib_dir=/usr/lib/temper-monitor
+conf_dir=/etc/temper-monitor
+service_file=/lib/systemd/system/temper-monitor.service
+# move src
+sudo rm -rv $lib_dir
+# move config
+#sudo rm -rv $conf_dir
+# move service file
+sudo rm -v $service_file

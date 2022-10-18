@@ -1,0 +1,14 @@
+[Unit]
+Description=temper-monitor daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/bin/sh /usr/lib/temper-monitor/start.sh
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

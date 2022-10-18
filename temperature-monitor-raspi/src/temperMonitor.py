@@ -14,14 +14,15 @@ from handlers.temperHandler import TemperHandler
 from actions.emailAction import EmailAction
 from actions.baseAction import BaseAction
 from log_helper import log
+# load conf during init
+from handlers import temperLoader
 
 class TemperMonitor:
-    def __init__(self, action: str, peroid = 1):
+    def __init__(self, action: str, peroid):
         self.peroid = peroid
         # temper handler
         self.temperHandler = TemperHandler()
         # load config
-        temperLoader = TemperLoader(sys.path[0])
         self.warn = temperLoader.level_warn
         self.reboot = temperLoader.level_reboot
         self.last = 0
@@ -29,7 +30,7 @@ class TemperMonitor:
         self.action = BaseAction()
         if(not action=="base"):
             if(action=="email"):
-                self.action = EmailAction(sys.path[0])
+                self.action = EmailAction(temperLoader.config_path)
             else:
                 log.info("Action name error, use base action!")
     

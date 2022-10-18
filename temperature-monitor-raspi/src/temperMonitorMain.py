@@ -8,10 +8,12 @@
 '''
 
 from temperMonitor import TemperMonitor
+from handlers.propHandler import TemperLoader
+from handlers import temperLoader
 
 def main():
     # create monitor
-    monitor = TemperMonitor("email")
+    monitor = TemperMonitor(temperLoader.mode,temperLoader.peroid)
     # start
     monitor.startMonitor()
 
