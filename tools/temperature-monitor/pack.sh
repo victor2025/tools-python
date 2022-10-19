@@ -1,7 +1,8 @@
 # 处理其他名称
 archname=$(uname -m|tr A-Z a-z)
+distr=$(lsb_release -is|tr A-Z a-z)
 version=$(git describe --tags `git rev-list --tags --max-count=1`)
-dirname=temper-monitor-$archname-$version
+dirname=temper-monitor-$distr-$version
 echo "Packing $dirname"
 # 编译打包
 # 移动文件
@@ -17,10 +18,10 @@ rm -v $dirname/src/.gitignore
 # 压缩
 echo "Compress files..."
 tar -czf $dirname.tar.gz $dirname
-# rm -r $dirname
+rm -r $dirname
 # 移动文件夹
 echo "Moving tar file..."
-if [ ! -d ./release]; then
+if [ ! -d ./release ]; then
 	mkdir ./release
 fi
 if [ ! -d ./release/$version ]; then
@@ -28,3 +29,7 @@ if [ ! -d ./release/$version ]; then
 fi
 # rm -r ../release/$1/$dirname
 mv $dirname.tar.gz ./release/$version/$dirname.tar.gz
+
+echo "Completed!"
+
+exit 0

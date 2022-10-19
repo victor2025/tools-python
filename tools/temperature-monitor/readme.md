@@ -1,7 +1,9 @@
-# Temperature Monitor for Raspi
+# Temperature Monitor for Linux
 
 ### Environment
-- raspbian
+- Linux
+  - debian
+  - ubuntu
 - python3.7
 
 ### Install
